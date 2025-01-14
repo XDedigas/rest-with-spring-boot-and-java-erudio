@@ -1,16 +1,16 @@
-package exceptions;
+package br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.Serial;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UnsupportedMathOperationException extends RuntimeException{
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException{
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public UnsupportedMathOperationException(String ex) {
+    public ResourceNotFoundException(String ex) {
         super(ex);
     }
 }

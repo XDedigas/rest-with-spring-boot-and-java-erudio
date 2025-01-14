@@ -1,4 +1,4 @@
-package exceptions;
+package br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

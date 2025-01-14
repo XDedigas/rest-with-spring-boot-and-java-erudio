@@ -3,6 +3,7 @@ package br.com.erudio.rest_with_spring_boot_and_java_erudio.controllers;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.services.PersonServices;
 
@@ -36,7 +37,8 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void update(@PathVariable(value = "id") long id) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

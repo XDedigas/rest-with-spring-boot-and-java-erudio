@@ -1,7 +1,7 @@
-package exceptions.handler;
+package br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.handler;
 
-import exceptions.ExceptionResponse;
-import exceptions.UnsupportedMathOperationException;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.ExceptionResponse;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,15 +14,15 @@ import java.util.Date;
 
 @ControllerAdvice
 @RestController
-public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomizedResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest resquest){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), resquest.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadResquestExceptions(Exception ex, WebRequest resquest){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest resquest){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), resquest.getDescription(false));
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 }

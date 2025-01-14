@@ -1,17 +1,36 @@
 package br.com.erudio.rest_with_spring_boot_and_java_erudio.model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "firstName", nullable = false, length = 50)
     private String firstName;
 
-    public long getId() {
+    @Column(name = "lastName", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(nullable = false, length = 100)
+    private String address;
+
+    @Column(nullable = false, length = 6)
+    private String gender;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,10 +65,6 @@ public class Person implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    private String lastName;
-    private String address;
-    private String gender;
 
     @Override
     public boolean equals(Object o) {
