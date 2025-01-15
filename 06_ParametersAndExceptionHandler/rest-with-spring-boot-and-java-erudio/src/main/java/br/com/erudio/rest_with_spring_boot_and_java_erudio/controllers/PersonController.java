@@ -1,6 +1,6 @@
 package br.com.erudio.rest_with_spring_boot_and_java_erudio.controllers;
 
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.model.Person;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1.PersonVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +17,23 @@ public class PersonController {
     private PersonServices service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         return service.findAll();
     }
 
     @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id")  long id) {
+    public PersonVO findById(@PathVariable(value = "id")  long id) {
         return service.findById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person person){
-        return service.create(person);
+    public PersonVO create(@RequestBody PersonVO personVO){
+        return service.create(personVO);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person person){
-        return service.update(person);
+    public PersonVO update(@RequestBody PersonVO personVO){
+        return service.update(personVO);
     }
 
     @DeleteMapping(value = "/{id}")
