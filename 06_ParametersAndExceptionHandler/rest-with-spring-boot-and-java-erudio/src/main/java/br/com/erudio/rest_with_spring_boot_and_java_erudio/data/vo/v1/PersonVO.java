@@ -2,10 +2,10 @@ package br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 public class PersonVO implements Serializable
 {
     private Long id;
