@@ -11,7 +11,7 @@ import br.com.erudio.rest_with_spring_boot_and_java_erudio.services.PersonServic
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
     @Autowired

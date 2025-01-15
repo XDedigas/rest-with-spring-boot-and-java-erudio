@@ -1,5 +1,6 @@
 package br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
