@@ -1,12 +1,18 @@
 package br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v2;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.dozermapper.core.Mapping;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class PersonVOV2 implements Serializable
+public class PersonVOV2 extends RepresentationModel<PersonVOV2> implements Serializable
 {
-    private Long id;
+    @JsonProperty("id")
+    @Mapping("id")
+    private Long key;
     private String firstName;
     private String lastName;
     private String address;
@@ -17,12 +23,12 @@ public class PersonVOV2 implements Serializable
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getKey() {
+        return key;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirstName() {
@@ -65,11 +71,11 @@ public class PersonVOV2 implements Serializable
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PersonVOV2 that = (PersonVOV2) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(birthDay, that.birthDay);
+        return Objects.equals(key, that.key) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(birthDay, that.birthDay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender, birthDay);
+        return Objects.hash(key, firstName, lastName, address, gender, birthDay);
     }
 }

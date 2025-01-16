@@ -43,7 +43,7 @@ public class MockPerson {
 
     public PersonVO mockVO(Integer number){
         PersonVO personVO = new PersonVO();
-        personVO.setId(number.longValue());
+        personVO.setKey(number.longValue());
         personVO.setGender(((number % 2) == 0) ? "Male" : "Female");
         personVO.setAddress("Addres Test " + number);
         personVO.setFirstName("First Name Test: " + number);
