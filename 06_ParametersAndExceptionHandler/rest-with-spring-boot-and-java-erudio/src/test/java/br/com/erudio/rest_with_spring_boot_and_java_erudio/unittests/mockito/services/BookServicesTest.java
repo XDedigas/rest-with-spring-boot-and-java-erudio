@@ -1,13 +1,12 @@
 package br.com.erudio.rest_with_spring_boot_and_java_erudio.unittests.mockito.services;
 
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1.PersonVO;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1.BookVO;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.RequiredObjectIsNullException;
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.model.Person;
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.repositories.PersonRepository;
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.services.PersonServices;
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.unittests.mapper.mocks.MockPerson;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.model.Book;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.repositories.BookRepository;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.services.BookServices;
+import br.com.erudio.rest_with_spring_boot_and_java_erudio.unittests.mapper.mocks.MockBook;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.util.TestUtils;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,64 +26,71 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class PersonServicesTest extends Object {
+class BookServicesTest extends Object {
 
-    MockPerson input;
+    MockBook input;
 
     @InjectMocks
-    private PersonServices service;
+    private BookServices service;
 
     @Mock
-    PersonRepository repository;
+    BookRepository repository;
 
     @BeforeEach
     void setUpMocks() {
-        input = new MockPerson();
+        input = new MockBook();
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void findAll() {
-        List<Person> list = input.mockEntityList();
+        // Criando a data com Calendar
+        Calendar calendar = TestUtils.createCalendar(2025, Calendar.JANUARY, 1);
 
+        List<Book> list = input.mockEntityList();
         when(repository.findAll()).thenReturn(list);
 
-        var people = service.findAll();
-        assertNotNull(people);
-        assertEquals(14, people.size());
+        var allBooks = service.findAll();
+        assertNotNull(allBooks);
+        assertEquals(15, allBooks.size());
 
-        TestUtils.validatePerson(people.get(1), 1, true);
-        TestUtils.validatePerson(people.get(4), 4, true);
-        TestUtils.validatePerson(people.get(7), 7, true);
+        //Realizar testes de alguns livros
+        TestUtils.validateBook(allBooks.get(1), (Calendar) calendar.clone(), 1, true);
+        TestUtils.validateBook(allBooks.get(4), (Calendar) calendar.clone(), 4, true);
+        TestUtils.validateBook(allBooks.get(7), calendar, 7, true);
     }
 
     @Test
     void findById() {
-        Person entity = input.mockEntity(1);
+        Calendar calendar = TestUtils.createCalendar(2025, Calendar.JANUARY, 1);
+
+        Book entity = input.mockEntity(1);
         entity.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
-        TestUtils.validatePerson(service.findById(1L), 1, true);
+        TestUtils.validateBook(service.findById(1L), calendar, 1, true);
     }
 
     @Test
     void create() {
-        Person entity = input.mockEntity(1);
+        Calendar calendar = TestUtils.createCalendar(2025, Calendar.JANUARY, 1);
 
-        Person persisted = entity;
+        Book entity = input.mockEntity(1);
+
+        Book persisted = entity;
         persisted.setId(1L);
 
-        PersonVO vo = input.mockVO(1);
+        BookVO vo = input.mockVO(1);
         vo.setKey(1L);
 
         when(repository.save(entity)).thenReturn(persisted);
 
-        TestUtils.validatePerson(service.create(vo), 1, true);
+        TestUtils.validateBook(service.create(vo), calendar, 1, true);
     }
 
     @Test
-    void createWithNullPerson() {
+    void createWithNullBook() {
         Exception ex = assertThrows(RequiredObjectIsNullException.class, () -> {
             service.create(null);
         });
@@ -93,23 +101,25 @@ class PersonServicesTest extends Object {
 
     @Test
     void update() {
-        Person entity = input.mockEntity(1);
+        Calendar calendar = TestUtils.createCalendar(2025, Calendar.JANUARY, 1);
+
+        Book entity = input.mockEntity(1);
         entity.setId(1L);
 
-        Person persisted = entity;
+        Book persisted = entity;
         persisted.setId(1L);
 
-        PersonVO vo = input.mockVO(1);
+        BookVO vo = input.mockVO(1);
         vo.setKey(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
         when(repository.save(entity)).thenReturn(persisted);
 
-        TestUtils.validatePerson(service.update(vo), 1, true);
+        TestUtils.validateBook(service.update(vo), calendar, 1, true);
     }
 
     @Test
-    void updateWithNullPerson() {
+    void updateWithNullBook() {
         Exception ex = assertThrows(RequiredObjectIsNullException.class, () -> {
             service.update(null);
         });
@@ -120,7 +130,9 @@ class PersonServicesTest extends Object {
 
     @Test
     void delete() {
-        Person entity = input.mockEntity(1);
+        Calendar calendar = TestUtils.createCalendar(2025, Calendar.JANUARY, 1);
+
+        Book entity = input.mockEntity(1);
         entity.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));

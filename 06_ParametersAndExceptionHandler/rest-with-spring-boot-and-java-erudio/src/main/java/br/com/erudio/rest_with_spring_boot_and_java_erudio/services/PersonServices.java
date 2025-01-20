@@ -2,7 +2,6 @@ package br.com.erudio.rest_with_spring_boot_and_java_erudio.services;
 
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.controllers.PersonController;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v1.PersonVO;
-import br.com.erudio.rest_with_spring_boot_and_java_erudio.data.vo.v2.PersonVOV2;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.rest_with_spring_boot_and_java_erudio.mapper.DozerMapper;
@@ -50,15 +49,6 @@ public class PersonServices {
         logger.info("Creating one person!");
         var entity = DozerMapper.parseObject(personVO, Person.class);
         PersonVO vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
-        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
-        return vo;
-    }
-
-    public PersonVOV2 createV2(PersonVOV2 personVOV2) {
-        if (personVOV2 == null) throw new RequiredObjectIsNullException();
-        logger.info("Creating one person with v2!");
-        var entity = mapper.convertVOToEntity(personVOV2);
-        PersonVOV2 vo = mapper.convertEntityToVO(repository.save(entity));
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
         return vo;
     }
