@@ -32,6 +32,7 @@ public class PersonController {
     })
     public List<PersonVO> findAll() { return service.findAll(); }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(
             value="/{id}",
             produces = { APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML })
@@ -47,6 +48,7 @@ public class PersonController {
         return service.findById(id);
     }
 
+    @CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"})
     @PostMapping(
             consumes = { APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML },
             produces = { APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML })
